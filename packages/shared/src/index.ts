@@ -1,4 +1,9 @@
-export * as Constants from './constants';
-export * as Middlewares from './middlewares';
-export * as Types from './types';
-export * as Utils from './utils';
+/**
+ * Shared utilities, types, and constants
+ */
+
+// Re-export all modules
+export * from './types';
+export * from './utils';
+export * from './constants';
+export * from './schemas';

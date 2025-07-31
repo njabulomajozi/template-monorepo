@@ -1,14 +1,13 @@
 import { defineConfig } from 'tsup';
 
 export default defineConfig({
-  entry: {
-    index: 'src/index.ts',
-    constants: 'src/constants/index.ts',
-    middlewares: 'src/middlewares/index.ts',
-    types: 'src/types/index.ts',
-    utils: 'src/utils/index.ts'
-  },
-  format: ["cjs", "esm"],
-  clean: true,
+  entry: ['src/index.ts'],
+  format: ['cjs', 'esm'],
   dts: true,
+  clean: true,
+  sourcemap: true,
+  splitting: true,
+  treeshake: true,
+  minify: false,
+  external: ['zod'],
 });

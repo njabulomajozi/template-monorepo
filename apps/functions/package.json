@@ -1,5 +1,5 @@
 {
-  "name": "@repo/shared",
+  "name": "@repo/functions-app",
   "version": "0.0.1",
   "private": true,
   "exports": {
@@ -22,9 +22,11 @@
     "clean": "rm -rf dist"
   },
   "dependencies": {
-    "zod": "catalog:"
+    "@repo/shared": "workspace:*",
+    "sst": "catalog:"
   },
   "devDependencies": {
+    "@types/aws-lambda": "catalog:",
     "@types/node": "catalog:",
     "@vitest/coverage-v8": "catalog:",
     "eslint": "catalog:",

@@ -1,29 +1,32 @@
 {
   "$schema": "https://turbo.build/schema.json",
-  "globalDependencies": ["**/.env.*local"],
+  "globalDependencies": ["**/.env.*local", "**/.env"],
+  "globalEnv": ["NODE_ENV", "CI", "AWS_REGION"],
   "tasks": {
     "build": {
       "dependsOn": ["^build"],
-      "outputs": ["dist/**"]
+      "outputs": ["dist/**", ".next/**", "build/**"]
     },
     "dev": {
-      "dependsOn": ["^build"],
       "cache": false,
       "persistent": true
     },
     "lint": {
-      "outputs": [],
-      "cache": true
+      "dependsOn": ["lint:code", "lint:type"]
+    },
+    "lint:code": {
+      "dependsOn": ["^build"]
+    },
+    "lint:type": {
+      "dependsOn": ["^build"]
     },
     "lint:fix": {
-      "outputs": [],
-      "cache": true
+      "dependsOn": ["^build"],
+      "cache": false
     },
     "test": {
       "dependsOn": ["^build"],
-      "outputs": ["coverage/**"],
-      "inputs": ["src/**/*.tsx", "src/**/*.ts", "test/**/*.ts", "test/**/*.tsx"],
-      "cache": true
+      "outputs": ["coverage/**"]
     },
     "test:watch": {
       "cache": false,
@@ -31,100 +34,10 @@
     },
     "test:coverage": {
       "dependsOn": ["^build"],
-      "outputs": ["coverage/**"],
-      "cache": true
+      "outputs": ["coverage/**"]
     },
     "clean": {
       "cache": false
-    },
-    "clean:all": {
-      "cache": false
-    },
-    "clean:build": {
-      "cache": false
-    },
-    "clean:cache": {
-      "cache": false
-    },
-    "clean:deps": {
-      "cache": false
-    },
-    "test:e2e": {
-      "dependsOn": ["^build"],
-      "outputs": ["test-results/**"],
-      "cache": true
-    },
-    "@onglx/db#build": {
-      "dependsOn": [],
-      "outputs": ["dist/**"]
-    },
-    "@onglx/ui#build": {
-      "dependsOn": [],
-      "outputs": ["dist/**"]
-    },
-    "@onglx/ai#build": {
-      "dependsOn": [
-        "@onglx/shared#build"
-      ],
-      "outputs": ["dist/**"]
-    },
-    "@onglx/core#build": {
-      "dependsOn": [
-        "@onglx/db#build",
-        "@onglx/shared#build"
-      ],
-      "outputs": ["dist/**"]
-    },
-    "@onglx/shared#build": {
-      "dependsOn": [],
-      "outputs": ["dist/**"]
-    },
-    "@onglx/shared#test": {
-      "dependsOn": ["@onglx/shared#build"],
-      "outputs": ["coverage/**"],
-      "cache": true
-    },
-    "@onglx/db#test": {
-      "dependsOn": ["@onglx/db#build"],
-      "outputs": ["coverage/**"],
-      "cache": true
-    },
-    "@onglx/ui#test": {
-      "dependsOn": ["@onglx/ui#build"],
-      "outputs": ["coverage/**"],
-      "cache": true
-    },
-    "@onglx/ai#test": {
-      "dependsOn": [
-        "@onglx/ai#build",
-        "@onglx/shared#build"
-      ],
-      "outputs": ["coverage/**"],
-      "cache": true
-    },
-    "@onglx/core#test": {
-      "dependsOn": [
-        "@onglx/core#build",
-        "@onglx/db#build",
-        "@onglx/shared#build"
-      ],
-      "outputs": ["coverage/**"],
-      "cache": true
-    },
-    "functions#test": {
-      "dependsOn": [
-        "@onglx/shared#build",
-        "@onglx/db#build"
-      ],
-      "outputs": ["coverage/**"],
-      "cache": true
-    },
-    "web-app#test": {
-      "dependsOn": [
-        "@onglx/ui#build"
-      ],
-      "outputs": ["coverage/**"],
-      "cache": true
     }
   }
 }
